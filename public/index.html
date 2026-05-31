@@ -103,8 +103,18 @@
     .rb em { font-style:italic; }
     .rb strong { font-weight:500; }
     .rb blockquote { border-left:2px solid var(--border2); margin:.8rem 0; padding:.4rem 0 .4rem 1rem; font-style:italic; color:var(--text2); font-family:'Cormorant Garamond',serif; font-size:16px; }
-    .neu-btn { display:block; margin:2.5rem auto 0; font-family:'Jost',sans-serif; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--text2); background:none; border:none; border-bottom:.5px solid var(--border); cursor:pointer; padding:5px 14px; transition:color .2s; }
+    .neu-btn { display:block; margin:1rem auto 0; font-family:'Jost',sans-serif; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--text2); background:none; border:none; border-bottom:.5px solid var(--border); cursor:pointer; padding:5px 14px; transition:color .2s; }
     .neu-btn:hover { color:var(--text); }
+    .pdf-btn { display:block; margin:2rem auto 0; font-family:'Cormorant Garamond',serif; font-size:15px; font-weight:400; letter-spacing:.14em; text-transform:uppercase; padding:12px 40px; border:.5px solid var(--border3); border-radius:var(--r-md); background:var(--bg); color:var(--text); cursor:pointer; transition:all .2s; }
+    .pdf-btn:hover { background:var(--bg2); }
+    .btn-row { display:flex; flex-direction:column; align-items:center; gap:0; margin-top:2rem; }
+    @media print {
+      .hdr, #frm, #ld, .btn-row { display:none !important; }
+      body { padding:1rem; background:#fff; color:#1a1a1a; }
+      .wrap { max-width:100%; }
+      .rb h2 { color:#9E0C16; }
+      .rn { color:#133358; }
+    }
     .err { background:#fff0f0; color:#c0392b; border:.5px solid rgba(192,57,43,.3); border-radius:var(--r-md); padding:10px 14px; font-size:12px; margin-top:.6rem; }
     @media(prefers-color-scheme:dark){ .err{background:#2a1010;color:#e07070;border-color:rgba(224,112,112,.3);} }
     @media(max-width:480px){ .g2{grid-template-columns:1fr} .tg{grid-template-columns:repeat(3,1fr)} .opts{grid-template-columns:1fr} .opts3{grid-template-columns:1fr 1fr} }
@@ -315,9 +325,16 @@ function showR(fname, typ, text){
   var tl=typ!=='unbekannt (bitte aus den Antworten ableiten)'?typ:'';
   var h='<div class="rh"><p class="rn">'+fname+'</p><p class="rt">'+(tl?tl+' · ':'')+'GEDANKEN-DESIGN Kompass</p><div class="div"></div></div>';
   h+='<div class="rb">'+fmtMd(text)+'</div>';
+  h+='<div class="btn-row">';
+  h+='<button class="pdf-btn" onclick="savePdf()">Als PDF speichern ↓</button>';
   h+='<button class="neu-btn" onclick="rst()">Neue Analyse starten</button>';
+  h+='</div>';
   var res=document.getElementById('res');
   res.innerHTML=h; res.style.display='block';
+}
+
+function savePdf(){
+  window.print();
 }
 
 function rst(){
