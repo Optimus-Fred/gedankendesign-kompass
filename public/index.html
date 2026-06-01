@@ -26,27 +26,21 @@
     }
     body { font-family:'Jost',sans-serif; font-weight:300; background:var(--bg); color:var(--text); min-height:100vh; padding:3rem 1.5rem 5rem; }
     .wrap { max-width:620px; margin:0 auto; }
-
-    /* Header */
-    .hdr { text-align:center; margin-bottom:2.5rem; }
+    .hdr { text-align:center; margin-bottom:1.8rem; }
     .hdr h1 { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:300; letter-spacing:.07em; color:var(--text); }
     .hdr h1 em { font-style:italic; }
     .hdr .sub { font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--text2); margin-top:4px; }
     .hdr .brand { font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--text3); margin-top:3px; }
     .div { width:36px; height:.5px; background:var(--border2); margin:.8rem auto; }
-
-    /* Sections */
+    .disclaimer { font-size:11px; line-height:1.6; color:var(--text3); text-align:center; background:var(--bg2); border:.5px solid var(--border); border-radius:var(--r-md); padding:10px 16px; margin-bottom:2rem; }
+    .disclaimer a { color:var(--text2); text-decoration:underline; text-underline-offset:2px; }
     .sec { margin-bottom:2rem; }
     .sec-t { font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--text2); margin-bottom:.8rem; padding-bottom:.4rem; border-bottom:.5px solid var(--border); }
-
-    /* Fields */
     .g2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
     .fld { display:flex; flex-direction:column; gap:3px; }
     .fld label { font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--text3); }
     .fld input { font-family:'Jost',sans-serif; font-size:13px; background:var(--bg2); border:.5px solid var(--border); border-radius:var(--r-md); padding:9px 12px; color:var(--text); outline:none; width:100%; transition:border-color .2s; }
     .fld input:focus { border-color:var(--border3); }
-
-    /* Type buttons */
     .tg { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; }
     .tb { display:flex; flex-direction:column; align-items:center; gap:4px; padding:10px 4px; border:.5px solid var(--border); border-radius:var(--r-md); background:var(--bg); cursor:pointer; transition:all .15s; font-family:'Jost',sans-serif; }
     .tb:hover { border-color:var(--border2); background:var(--bg2); }
@@ -57,8 +51,6 @@
     .tb.sel .tn { color:var(--text); font-weight:500; }
     .tunk { flex-direction:row; justify-content:center; gap:8px; width:100%; padding:8px 12px; margin-top:6px; }
     .tunk .tn { font-size:11px; }
-
-    /* Questions */
     .qs { display:flex; flex-direction:column; gap:1.3rem; }
     .qi { display:flex; flex-direction:column; gap:6px; }
     .qn { font-size:10px; letter-spacing:.12em; color:var(--text3); text-transform:uppercase; }
@@ -72,8 +64,6 @@
     textarea { font-family:'Jost',sans-serif; font-size:12px; font-weight:300; background:var(--bg2); border:.5px solid var(--border); border-radius:var(--r-md); padding:9px 12px; color:var(--text); outline:none; resize:vertical; min-height:62px; width:100%; line-height:1.6; transition:border-color .2s; }
     textarea:focus { border-color:var(--border3); }
     textarea::placeholder { color:var(--text3); }
-
-    /* Submit */
     .sub-a { margin-top:2rem; text-align:center; }
     .sub-btn { font-family:'Cormorant Garamond',serif; font-size:15px; font-weight:400; letter-spacing:.14em; text-transform:uppercase; padding:13px 44px; border:.5px solid var(--border3); border-radius:var(--r-md); background:var(--bg); color:var(--text); cursor:pointer; transition:all .2s; }
     .sub-btn:hover:not(:disabled) { background:var(--bg2); }
@@ -81,8 +71,6 @@
     .prog { display:flex; align-items:center; gap:5px; justify-content:center; margin-top:.6rem; }
     .pd { width:4px; height:4px; border-radius:50%; background:var(--border); transition:background .2s; }
     .pd.on { background:var(--text2); }
-
-    /* Loading */
     .load { text-align:center; padding:4rem 0; }
     .ldots { display:inline-flex; gap:5px; }
     .ldots span { width:5px; height:5px; border-radius:50%; background:var(--text2); animation:lp 1.2s ease-in-out infinite; }
@@ -90,8 +78,6 @@
     @keyframes lp{0%,80%,100%{opacity:.2;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
     .lt { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:300; letter-spacing:.06em; color:var(--text2); margin-top:1rem; }
     .ls { font-size:11px; letter-spacing:.1em; color:var(--text3); text-transform:uppercase; margin-top:.4rem; }
-
-    /* Result */
     .rh { text-align:center; padding:1.2rem 0 1.8rem; border-bottom:.5px solid var(--border); margin-bottom:1.8rem; }
     .rn { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:300; }
     .rt { font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--text2); margin-top:3px; }
@@ -103,17 +89,20 @@
     .rb em { font-style:italic; }
     .rb strong { font-weight:500; }
     .rb blockquote { border-left:2px solid var(--border2); margin:.8rem 0; padding:.4rem 0 .4rem 1rem; font-style:italic; color:var(--text2); font-family:'Cormorant Garamond',serif; font-size:16px; }
+    .result-footer { text-align:center; margin-top:2rem; padding-top:1.2rem; border-top:.5px solid var(--border); font-size:11px; color:var(--text3); letter-spacing:.08em; }
+    .result-footer a { color:var(--text2); text-decoration:underline; text-underline-offset:2px; }
     .neu-btn { display:block; margin:1rem auto 0; font-family:'Jost',sans-serif; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--text2); background:none; border:none; border-bottom:.5px solid var(--border); cursor:pointer; padding:5px 14px; transition:color .2s; }
     .neu-btn:hover { color:var(--text); }
     .pdf-btn { display:block; margin:2rem auto 0; font-family:'Cormorant Garamond',serif; font-size:15px; font-weight:400; letter-spacing:.14em; text-transform:uppercase; padding:12px 40px; border:.5px solid var(--border3); border-radius:var(--r-md); background:var(--bg); color:var(--text); cursor:pointer; transition:all .2s; }
     .pdf-btn:hover { background:var(--bg2); }
     .btn-row { display:flex; flex-direction:column; align-items:center; gap:0; margin-top:2rem; }
     @media print {
-      .hdr, #frm, #ld, .btn-row { display:none !important; }
+      .hdr, #frm, #ld, .btn-row, .disclaimer { display:none !important; }
       body { padding:1rem; background:#fff; color:#1a1a1a; }
       .wrap { max-width:100%; }
       .rb h2 { color:#9E0C16; }
       .rn { color:#133358; }
+      .result-footer { display:block !important; }
     }
     .err { background:#fff0f0; color:#c0392b; border:.5px solid rgba(192,57,43,.3); border-radius:var(--r-md); padding:10px 14px; font-size:12px; margin-top:.6rem; }
     @media(prefers-color-scheme:dark){ .err{background:#2a1010;color:#e07070;border-color:rgba(224,112,112,.3);} }
@@ -128,6 +117,13 @@
     <p class="sub">Persönlichkeitsanalyse &amp; Coaching</p>
     <p class="brand">Erich Steinwendner · IMPULSGEBER</p>
   </header>
+
+  <div class="disclaimer">
+    Dieser Kompass ist keine wissenschaftliche Analyse. Er basiert auf den Büchern
+    <em>GEDANKEN-DESIGN</em> und <em>Trotzdem.</em> von Erich Steinwendner
+    und dient der persönlichen Reflexion und Orientierung.
+    Mehr unter <a href="https://www.steinwendner.info" target="_blank" rel="noopener">steinwendner.info</a>
+  </div>
 
   <div id="frm">
     <div class="sec">
@@ -251,6 +247,17 @@
       </div>
     </div>
 
+    <div class="sec">
+      <p class="sec-t">KINTSUGI &amp; Stärke</p>
+      <div class="qs">
+        <div class="qi">
+          <span class="qn">10 <span class="qtag">Goldene Fugen</span></span>
+          <p class="qt">Wo in deinem Leben hat dich etwas Zerbrochenes stärker gemacht — eine Niederlage, ein Verlust, eine Krise, die dich im Nachhinein geformt hat?</p>
+          <textarea id="kintsugi" placeholder="Ruhig unfertig. Das Gold steckt in der Antwort."></textarea>
+        </div>
+      </div>
+    </div>
+
     <div class="sub-a">
       <button class="sub-btn" id="sbtn" onclick="go()">Kompass erstellen ↗</button>
       <div class="prog" id="pb"></div>
@@ -262,7 +269,7 @@
     <div class="load">
       <div class="ldots"><span></span><span></span><span></span></div>
       <p class="lt">Dein Kompass entsteht</p>
-      <p class="ls">GEDANKEN-DESIGN · IKIGAI · IMAGO</p>
+      <p class="ls">GEDANKEN-DESIGN · IKIGAI · KINTSUGI</p>
     </div>
   </div>
 
@@ -282,6 +289,7 @@ async function go(){
   var imago=document.getElementById('im').value.trim();
   var trotzdem=document.getElementById('tz').value.trim();
   var intent=document.getElementById('int').value.trim();
+  var kintsugi=document.getElementById('kintsugi').value.trim();
   var er=document.getElementById('er');
   er.innerHTML='';
 
@@ -289,9 +297,17 @@ async function go(){
   if(['e1','e2','e3','e4','e5','e6'].some(q=>!ans[q])){ er.innerHTML='<div class="err">Bitte beantworte alle Auswahl-Fragen.</div>'; return; }
 
   var typeT=sType&&sType!=='unbekannt'?sType:'unbekannt (bitte aus den Antworten ableiten)';
+
   var alter='';
-  if(bdate){var geb=new Date(bdate),heute=new Date();alter=heute.getFullYear()-geb.getFullYear()-(heute<new Date(heute.getFullYear(),geb.getMonth(),geb.getDate())?1:0);}
-  var prompt='GEDANKEN-DESIGN Kompass für '+fname+(bdate?' (geb. '+bdate+(alter?', aktuell '+alter+' Jahre alt)':')') :'')+'\n\nGEDANKEN-DESIGN Typ: '+typeT+'\nEnergie: '+ans.e1+'\nEntscheidung: '+ans.e2+'\nSchatten: '+ans.e3+'\nGlaubenssatz: '+ans.e4+'\nSozialer Kontakt: '+ans.e5+'\nIKIGAI-Status: '+ans.e6+(imago?'\nIMAGO-Potenzial: '+imago:'')+(trotzdem?'\nTrotzdem-Bereich: '+trotzdem:'')+(intent?'\nIntention: '+intent:'')+'\n\nDie fünf GEDANKEN-DESIGN Typen:\n• Der Gestalter — denkt, plant, baut. Konstante Energie, initiiert aus sich heraus.\n• Der Impulsgeber — zündet Funken, bewegt andere, braucht Freiraum. Energie in Schüben.\n• Der Wegbegleiter — führt durch Stille, erkennt Potenziale, wartet auf die richtige Einladung.\n• Der Spiegel — nimmt auf, was andere einbringen, reflektiert das Umfeld tief und präzise.\n• Der Wandler — lebt in Zyklen, braucht Zeit zum Verarbeiten, trägt die Stimmung eines Raumes.\n\nKonzepte aus GEDANKEN-DESIGN:\n• Gedanken als Filter für das Unterbewusstsein — der Mensch als Gestalter.\n• Glaubenssätze: einschränkende Überzeugungen hinterfragen und durch stärkende ersetzen.\n• IMAGO-Zellen: schlummerndes Potenzial, das auf Aktivierung wartet.\n• IKIGAI: Schnittmenge aus Liebe, Können, Wirkung, Lebensunterhalt.\n• Trotzdem-Haltung: trotz Erschöpfung weitergehen — aus tiefer Überzeugung.\n• Fundament unter Druck: das was bleibt, wenn man aufhört alles festhalten zu wollen.\n\nBitte erstelle die vollständige GEDANKEN-DESIGN Kompass Analyse mit diesen Abschnitten:\n## Dein Energieprofil\n## Dein Entscheidungskompass\n## Deine IMAGO-Zellen\n## Dein Glaubenssatz-Muster\n## Dein IKIGAI\n## Trotzdem — dein Fundament\n## Fünf Impulse für dich\n## Ein Satz für dich\n\nWarm, tief, direkt (du/dein). Gelegentlich *kursiv*. Kein Horoskop — echtes Gespräch.';
+  if(bdate){
+    var geb=new Date(bdate), heute=new Date();
+    alter=heute.getFullYear()-geb.getFullYear()-(heute<new Date(heute.getFullYear(),geb.getMonth(),geb.getDate())?1:0);
+  }
+
+  var gebInfo=bdate?(', geb. '+bdate+(alter?', aktuell '+alter+' Jahre alt)':')')):')';
+  if(!bdate) gebInfo='';
+
+  var prompt='GEDANKEN-DESIGN Kompass für '+fname+(bdate?gebInfo:'')+'\n\nGEDANKEN-DESIGN Typ: '+typeT+'\nEnergie: '+ans.e1+'\nEntscheidung: '+ans.e2+'\nSchatten: '+ans.e3+'\nGlaubenssatz: '+ans.e4+'\nSozialer Kontakt: '+ans.e5+'\nIKIGAI-Status: '+ans.e6+(imago?'\nIMAGO-Potenzial: '+imago:'')+(trotzdem?'\nTrotzdem-Bereich: '+trotzdem:'')+(kintsugi?'\nKINTSUGI — Goldene Fugen: '+kintsugi:'')+(intent?'\nIntention: '+intent:'')+'\n\nDie fünf GEDANKEN-DESIGN Typen:\n• Der Gestalter — denkt, plant, baut. Konstante Energie, initiiert aus sich heraus.\n• Der Impulsgeber — zündet Funken, bewegt andere, braucht Freiraum. Energie in Schüben.\n• Der Wegbegleiter — führt durch Stille, erkennt Potenziale, wartet auf die richtige Einladung.\n• Der Spiegel — nimmt auf, was andere einbringen, reflektiert das Umfeld tief und präzise.\n• Der Wandler — lebt in Zyklen, braucht Zeit zum Verarbeiten, trägt die Stimmung eines Raumes.\n\nKonzepte aus GEDANKEN-DESIGN und Trotzdem.:\n• Gedanken als Filter für das Unterbewusstsein — der Mensch als Gestalter.\n• Glaubenssätze: einschränkende Überzeugungen hinterfragen und durch stärkende ersetzen.\n• IMAGO-Zellen: schlummerndes Potenzial, das auf Aktivierung wartet.\n• IKIGAI: Schnittmenge aus Liebe, Können, Wirkung, Lebensunterhalt.\n• KINTSUGI: Die Kunst, Zerbrochenes mit Gold zu reparieren — Narben als Stärke, nicht als Schwäche. Goldene Fugen als sichtbare Geschichte der Heilung.\n• Trotzdem-Haltung: trotz Erschöpfung weitergehen — aus tiefer Überzeugung.\n• Fundament unter Druck: das was bleibt, wenn man aufhört alles festhalten zu wollen.\n\nBitte erstelle die vollständige GEDANKEN-DESIGN Kompass Analyse mit diesen Abschnitten:\n## Dein Energieprofil\n## Dein Entscheidungskompass\n## Deine IMAGO-Zellen\n## Dein Glaubenssatz-Muster\n## Dein IKIGAI\n## Deine goldenen Fugen\n## Trotzdem — dein Fundament\n## Fünf Impulse für dich\n## Ein Satz für dich\n\nWarm, tief, direkt (du/dein). Gelegentlich *kursiv*. Kein Horoskop — echtes Gespräch. Schreibe vollständige Sätze bis zum Ende jedes Abschnitts.';
 
   document.getElementById('frm').style.display='none';
   document.getElementById('ld').style.display='block';
@@ -327,6 +343,7 @@ function showR(fname, typ, text){
   var tl=typ!=='unbekannt (bitte aus den Antworten ableiten)'?typ:'';
   var h='<div class="rh"><p class="rn">'+fname+'</p><p class="rt">'+(tl?tl+' · ':'')+'GEDANKEN-DESIGN Kompass</p><div class="div"></div></div>';
   h+='<div class="rb">'+fmtMd(text)+'</div>';
+  h+='<div class="result-footer">Basierend auf <em>GEDANKEN-DESIGN</em> und <em>Trotzdem.</em> von Erich Steinwendner &nbsp;·&nbsp; <a href="https://www.steinwendner.info" target="_blank" rel="noopener">steinwendner.info</a></div>';
   h+='<div class="btn-row">';
   h+='<button class="pdf-btn" onclick="savePdf()">Als PDF speichern ↓</button>';
   h+='<button class="neu-btn" onclick="rst()">Neue Analyse starten</button>';
@@ -341,7 +358,7 @@ function savePdf(){
 
 function rst(){
   sType=''; ans={};
-  ['fn','bd','im','tz','int'].forEach(id=>{var e=document.getElementById(id);if(e)e.value='';});
+  ['fn','bd','im','tz','int','kintsugi'].forEach(id=>{var e=document.getElementById(id);if(e)e.value='';});
   document.querySelectorAll('.tb,.opt').forEach(b=>b.classList.remove('sel'));
   document.getElementById('pb').innerHTML='';
   document.getElementById('er').innerHTML='';
