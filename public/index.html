@@ -130,7 +130,14 @@
       <p class="sec-t">Persönliche Angaben</p>
       <div class="g2">
         <div class="fld"><label>Vorname</label><input type="text" id="fn" placeholder="Dein Vorname"/></div>
-        <div class="fld"><label>Geburtsdatum</label><input type="date" id="bd"/></div>
+        <div class="fld">
+          <label>Geburtsdatum</label>
+          <div style="display:grid;grid-template-columns:2fr 2fr 3fr;gap:6px;">
+            <input type="number" id="bd-tag" placeholder="TT" min="1" max="31" style="text-align:center;"/>
+            <input type="number" id="bd-mon" placeholder="MM" min="1" max="12" style="text-align:center;"/>
+            <input type="number" id="bd-jahr" placeholder="JJJJ" min="1900" max="2025" style="text-align:center;"/>
+          </div>
+        </div>
       </div>
     </div>
 
@@ -285,7 +292,13 @@ function upP(){ var t=9,f=Object.keys(ans).length+(sType?1:0),pb=document.getEle
 
 async function go(){
   var fname=document.getElementById('fn').value.trim();
-  var bdate=document.getElementById('bd').value;
+  var bdTag=document.getElementById('bd-tag').value.trim();
+  var bdMon=document.getElementById('bd-mon').value.trim();
+  var bdJahr=document.getElementById('bd-jahr').value.trim();
+  var bdate='';
+  if(bdTag&&bdMon&&bdJahr&&bdJahr.length===4){
+    bdate=bdJahr+'-'+bdMon.padStart(2,'0')+'-'+bdTag.padStart(2,'0');
+  }
   var imago=document.getElementById('im').value.trim();
   var trotzdem=document.getElementById('tz').value.trim();
   var intent=document.getElementById('int').value.trim();
@@ -323,7 +336,7 @@ async function go(){
     document.getElementById('ld').style.display='none';
     document.getElementById('frm').style.display='block';
     document.getElementById('sbtn').disabled=false;
-    er.innerHTML='<div class="err">Der Kompass wird gerade gewartet oder es ist ein technischer Fehler aufgetreten. Bitte versuche es in einigen Minuten erneut — oder schreib mir direkt: <a href="mailto:erich@steinwendner.net" style="color:inherit;text-decoration:underline;">erich@steinwendner.net</a></div>';
+    er.innerHTML='<div class="err">Fehler bei der Analyse. Bitte versuche es erneut.</div>';
   }
 }
 
@@ -358,7 +371,7 @@ function savePdf(){
 
 function rst(){
   sType=''; ans={};
-  ['fn','bd','im','tz','int','kintsugi'].forEach(id=>{var e=document.getElementById(id);if(e)e.value='';});
+  ['fn','bd-tag','bd-mon','bd-jahr','im','tz','int','kintsugi'].forEach(id=>{var e=document.getElementById(id);if(e)e.value='';});
   document.querySelectorAll('.tb,.opt').forEach(b=>b.classList.remove('sel'));
   document.getElementById('pb').innerHTML='';
   document.getElementById('er').innerHTML='';
