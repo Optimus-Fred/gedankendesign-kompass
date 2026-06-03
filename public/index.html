@@ -390,17 +390,38 @@ async function go(){
 
   try {
     var r=await fetch('/api/analyse',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
-    var d=await r.json();
-    if(!d.result) throw new Error('leer');
+    if(!r.ok) throw new Error('server error');
     clearInterval(ldTimer);
     document.getElementById('ld').style.display='none';
-    showR(fname, typeT, d.result);
+    showR(fname, typeT, '');
+    var resultDiv=document.getElementById('stream-content');
+    var fullText='';
+    var reader=r.body.getReader();
+    var decoder=new TextDecoder();
+    var buffer='';
+    while(true){
+      var chunk=await reader.read();
+      if(chunk.done) break;
+      buffer+=decoder.decode(chunk.value,{stream:true});
+      var lines=buffer.split('\n');
+      buffer=lines.pop();
+      for(var line of lines){
+        if(line.startsWith('data: ')){
+          var data=line.slice(6);
+          if(data==='[DONE]') break;
+          try{
+            var parsed=JSON.parse(data);
+            if(parsed.text){fullText+=parsed.text;if(resultDiv)resultDiv.innerHTML=fmtMd(fullText);}
+          }catch(ex){}
+        }
+      }
+    }
   } catch(e){
     clearInterval(ldTimer);
     document.getElementById('ld').style.display='none';
     document.getElementById('frm').style.display='block';
     document.getElementById('sbtn').disabled=false;
-    er.innerHTML='<div class="err">Fehler bei der Analyse. Bitte versuche es erneut.</div>';
+    er.innerHTML='<div class="err">Der Kompass wird gerade gewartet oder es ist ein technischer Fehler aufgetreten. Bitte versuche es in einigen Minuten erneut — oder schreib mir direkt: <a href="mailto:erich@steinwendner.net" style="color:inherit;text-decoration:underline;">erich@steinwendner.net</a></div>';
   }
 }
 
@@ -419,7 +440,7 @@ function fmtMd(t){
 function showR(fname, typ, text){
   var tl=typ!=='unbekannt (bitte aus den Antworten ableiten)'?typ:'';
   var h='<div class="rh"><p class="rn">'+fname+'</p><p class="rt">'+(tl?tl+' · ':'')+'GEDANKEN-DESIGN Kompass</p><div class="div"></div></div>';
-  h+='<div class="rb">'+fmtMd(text)+'</div>';
+  h+='<div class="rb" id="stream-content">'+fmtMd(text)+'</div>';
   h+='<div class="result-footer">Basierend auf <em>GEDANKEN-DESIGN</em> und <em>Trotzdem.</em> von Erich Steinwendner &nbsp;·&nbsp; <a href="https://www.steinwendner.info" target="_blank" rel="noopener">steinwendner.info</a></div>';
   h+='<div style="text-align:center;margin-top:1.8rem;padding:1.4rem 1.2rem;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--r-lg);"><p style="font-family:Cormorant Garamond,serif;font-size:17px;font-weight:300;letter-spacing:.03em;color:var(--text);margin-bottom:.6rem;">Wenn dich diese Analyse berührt hat und du tiefer gehen möchtest —</p><p style="font-size:13px;color:var(--text2);margin-bottom:1rem;">Ich begleite dich gerne persönlich.</p><a href="https://www.steinwendner.info" target="_blank" rel="noopener" style="display:inline-block;font-family:Cormorant Garamond,serif;font-size:14px;letter-spacing:.12em;text-transform:uppercase;padding:10px 28px;border:.5px solid var(--border3);border-radius:var(--r-md);color:var(--text);text-decoration:none;">Jetzt Kontakt aufnehmen</a></div>';
   h+='<div class="btn-row">';
