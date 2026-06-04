@@ -337,7 +337,6 @@ function sT(b){ document.querySelectorAll('.tb').forEach(x=>x.classList.remove('
 function sO(b){ var q=b.dataset.q; document.querySelectorAll('[data-q="'+q+'"]').forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); ans[q]=b.dataset.v; upP(); }
 function upP(){ var t=9,f=Object.keys(ans).length+(sType?1:0),pb=document.getElementById('pb'); pb.innerHTML=''; for(var i=0;i<t;i++){var d=document.createElement('div');d.className='pd'+(i<f?' on':'');pb.appendChild(d);} }
 
-var ldTimer=null;
 async function go(){
   var fname=document.getElementById('fn').value.trim();
   var bdTag=document.getElementById('bd-tag').value.trim();
@@ -374,30 +373,13 @@ async function go(){
   document.getElementById('ld').style.display='block';
   document.getElementById('sbtn').disabled=true;
 
-  var ldTexte=[
-    'Dein Energieprofil wird gelesen',
-    'Deine Glaubenssätze werden betrachtet',
-    'Deine IMAGO-Zellen erwachen',
-    'Deine goldenen Fugen werden gespürt',
-    'Dein Trotzdem-Fundament wird erkannt',
-    'Dein persönlicher Kompass entsteht'
-  ];
-  var ldIdx=0;
-  ldTimer=setInterval(function(){
-    ldIdx=(ldIdx+1)%ldTexte.length;
-    var el=document.getElementById('ld-text');
-    if(el) el.textContent=ldTexte[ldIdx];
-  },2000);
-
   try {
     var r=await fetch('/api/analyse',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
     var d=await r.json();
     if(!d.result) throw new Error('leer');
-    clearInterval(ldTimer);
     document.getElementById('ld').style.display='none';
     showR(fname, typeT, d.result);
   } catch(e){
-    clearInterval(ldTimer);
     document.getElementById('ld').style.display='none';
     document.getElementById('frm').style.display='block';
     document.getElementById('sbtn').disabled=false;
