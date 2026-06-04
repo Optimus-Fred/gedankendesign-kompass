@@ -1,35 +1,452 @@
-export default async function handler(req, res) {
-  res.setHeader('Access-Control-Allow-Origin', '*');
-  res.setHeader('Access-Control-Allow-Methods', 'POST, OPTIONS');
-  res.setHeader('Access-Control-Allow-Headers', 'Content-Type');
+<!DOCTYPE html>
+<html lang="de">
+<head>
+  <meta charset="UTF-8"/>
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>GEDANKEN-DESIGN Kompass · Erich Steinwendner</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com"/>
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Jost:wght@300;400;500&display=swap" rel="stylesheet"/>
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/@tabler/icons-webfont@3.x/dist/tabler-icons.min.css"/>
+  <style>
+    *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+    :root {
+      --bg: #ffffff; --bg2: #f7f6f3;
+      --text: #1a1a1a; --text2: #6b6b6b; --text3: #a0a0a0;
+      --border: rgba(0,0,0,0.12); --border2: rgba(0,0,0,0.22); --border3: rgba(0,0,0,0.4);
+      --rot: #9E0C16; --blau: #133358;
+      --r-md: 8px; --r-lg: 12px;
+    }
+    @media(prefers-color-scheme:dark){
+      :root{
+        --bg:#141414; --bg2:#1e1e1e;
+        --text:#f0ede8; --text2:#9a9690; --text3:#5a5754;
+        --border:rgba(255,255,255,0.1); --border2:rgba(255,255,255,0.2); --border3:rgba(255,255,255,0.38);
+      }
+    }
+    body { font-family:'Jost',sans-serif; font-weight:300; background:var(--bg); color:var(--text); min-height:100vh; padding:3rem 1.5rem 5rem; }
+    .wrap { max-width:620px; margin:0 auto; }
+    .hdr { text-align:center; margin-bottom:1.8rem; }
+    .hdr h1 { font-family:'Cormorant Garamond',serif; font-size:32px; font-weight:300; letter-spacing:.07em; color:var(--text); }
+    .hdr h1 em { font-style:italic; }
+    .hdr .sub { font-size:11px; letter-spacing:.2em; text-transform:uppercase; color:var(--text2); margin-top:4px; }
+    .hdr .brand { font-size:11px; letter-spacing:.14em; text-transform:uppercase; color:var(--text3); margin-top:3px; }
+    .div { width:36px; height:.5px; background:var(--border2); margin:.8rem auto; }
+    .disclaimer { font-size:11px; line-height:1.6; color:var(--text3); text-align:center; background:var(--bg2); border:.5px solid var(--border); border-radius:var(--r-md); padding:10px 16px; margin-bottom:2rem; }
+    .disclaimer a { color:var(--text2); text-decoration:underline; text-underline-offset:2px; }
+    .sec { margin-bottom:2rem; }
+    .sec-t { font-size:10px; letter-spacing:.22em; text-transform:uppercase; color:var(--text2); margin-bottom:.8rem; padding-bottom:.4rem; border-bottom:.5px solid var(--border); }
+    .g2 { display:grid; grid-template-columns:1fr 1fr; gap:10px; }
+    .fld { display:flex; flex-direction:column; gap:3px; }
+    .fld label { font-size:10px; letter-spacing:.12em; text-transform:uppercase; color:var(--text3); }
+    .fld input { font-family:'Jost',sans-serif; font-size:13px; background:var(--bg2); border:.5px solid var(--border); border-radius:var(--r-md); padding:9px 12px; color:var(--text); outline:none; width:100%; transition:border-color .2s; }
+    .fld input:focus { border-color:var(--border3); }
+    .tg { display:grid; grid-template-columns:repeat(5,1fr); gap:6px; }
+    .tb { display:flex; flex-direction:column; align-items:center; gap:4px; padding:10px 4px; border:.5px solid var(--border); border-radius:var(--r-md); background:var(--bg); cursor:pointer; transition:all .15s; font-family:'Jost',sans-serif; }
+    .tb:hover { border-color:var(--border2); background:var(--bg2); }
+    .tb.sel { border:2px solid var(--text) !important; background:var(--bg2); }
+    .tb i { font-size:20px; color:var(--text2); }
+    .tb.sel i { color:var(--text); }
+    .tb .tn { font-size:9px; letter-spacing:.05em; text-align:center; color:var(--text2); line-height:1.3; }
+    .tb.sel .tn { color:var(--text); font-weight:500; }
+    .tunk { flex-direction:row; justify-content:center; gap:8px; width:100%; padding:8px 12px; margin-top:6px; }
+    .tunk .tn { font-size:11px; }
+    .qs { display:flex; flex-direction:column; gap:1.3rem; }
+    .qi { display:flex; flex-direction:column; gap:6px; }
+    .qn { font-size:10px; letter-spacing:.12em; color:var(--text3); text-transform:uppercase; }
+    .qtag { font-size:9px; letter-spacing:.1em; text-transform:uppercase; color:var(--text2); background:var(--bg2); border:.5px solid var(--border); padding:1px 7px; border-radius:20px; display:inline-block; margin-left:5px; }
+    .qt { font-size:13px; line-height:1.6; color:var(--text); }
+    .opts { display:grid; grid-template-columns:1fr 1fr; gap:5px; }
+    .opts3 { grid-template-columns:1fr 1fr 1fr; }
+    .opt { padding:9px 11px; border:.5px solid var(--border); border-radius:var(--r-md); background:var(--bg); cursor:pointer; font-family:'Jost',sans-serif; font-size:12px; color:var(--text2); transition:all .15s; text-align:left; line-height:1.4; }
+    .opt:hover { border-color:var(--border2); color:var(--text); }
+    .opt.sel { border:2px solid var(--text) !important; color:var(--text); font-weight:500; background:var(--bg2); }
+    textarea { font-family:'Jost',sans-serif; font-size:12px; font-weight:300; background:var(--bg2); border:.5px solid var(--border); border-radius:var(--r-md); padding:9px 12px; color:var(--text); outline:none; resize:vertical; min-height:62px; width:100%; line-height:1.6; transition:border-color .2s; }
+    textarea:focus { border-color:var(--border3); }
+    textarea::placeholder { color:var(--text3); }
+    .sub-a { margin-top:2rem; text-align:center; }
+    .sub-btn { font-family:'Cormorant Garamond',serif; font-size:15px; font-weight:400; letter-spacing:.14em; text-transform:uppercase; padding:13px 44px; border:.5px solid var(--border3); border-radius:var(--r-md); background:var(--bg); color:var(--text); cursor:pointer; transition:all .2s; }
+    .sub-btn:hover:not(:disabled) { background:var(--bg2); }
+    .sub-btn:disabled { opacity:.4; cursor:not-allowed; }
+    .prog { display:flex; align-items:center; gap:5px; justify-content:center; margin-top:.6rem; }
+    .pd { width:4px; height:4px; border-radius:50%; background:var(--border); transition:background .2s; }
+    .pd.on { background:var(--text2); }
+    .load { text-align:center; padding:4rem 0; }
+    .ldots { display:inline-flex; gap:5px; }
+    .ldots span { width:5px; height:5px; border-radius:50%; background:var(--text2); animation:lp 1.2s ease-in-out infinite; }
+    .ldots span:nth-child(2){animation-delay:.2s} .ldots span:nth-child(3){animation-delay:.4s}
+    @keyframes lp{0%,80%,100%{opacity:.2;transform:scale(.8)}40%{opacity:1;transform:scale(1)}}
+    .lt { font-family:'Cormorant Garamond',serif; font-size:18px; font-weight:300; letter-spacing:.06em; color:var(--text2); margin-top:1rem; }
+    .ls { font-size:11px; letter-spacing:.1em; color:var(--text3); text-transform:uppercase; margin-top:.4rem; }
+    .rh { text-align:center; padding:1.2rem 0 1.8rem; border-bottom:.5px solid var(--border); margin-bottom:1.8rem; }
+    .rn { font-family:'Cormorant Garamond',serif; font-size:26px; font-weight:300; }
+    .rt { font-size:11px; letter-spacing:.16em; text-transform:uppercase; color:var(--text2); margin-top:3px; }
+    .rb { font-size:14px; line-height:1.85; }
+    .rb h2 { font-family:'Cormorant Garamond',serif; font-size:20px; font-weight:400; margin:2rem 0 .6rem; color:var(--rot); }
+    .rb p { margin-bottom:.7rem; }
+    .rb ul { margin:.4rem 0 .9rem 1.2rem; }
+    .rb li { margin-bottom:.35rem; }
+    .rb em { font-style:italic; }
+    .rb strong { font-weight:500; }
+    .rb blockquote { border-left:2px solid var(--border2); margin:.8rem 0; padding:.4rem 0 .4rem 1rem; font-style:italic; color:var(--text2); font-family:'Cormorant Garamond',serif; font-size:16px; }
+    .result-footer { text-align:center; margin-top:2rem; padding-top:1.2rem; border-top:.5px solid var(--border); font-size:11px; color:var(--text3); letter-spacing:.08em; }
+    .result-footer a { color:var(--text2); text-decoration:underline; text-underline-offset:2px; }
+    .neu-btn { display:block; margin:1rem auto 0; font-family:'Jost',sans-serif; font-size:11px; letter-spacing:.12em; text-transform:uppercase; color:var(--text2); background:none; border:none; border-bottom:.5px solid var(--border); cursor:pointer; padding:5px 14px; transition:color .2s; }
+    .neu-btn:hover { color:var(--text); }
+    .pdf-btn { display:block; margin:2rem auto 0; font-family:'Cormorant Garamond',serif; font-size:15px; font-weight:400; letter-spacing:.14em; text-transform:uppercase; padding:12px 40px; border:.5px solid var(--border3); border-radius:var(--r-md); background:var(--bg); color:var(--text); cursor:pointer; transition:all .2s; }
+    .pdf-btn:hover { background:var(--bg2); }
+    .btn-row { display:flex; flex-direction:column; align-items:center; gap:0; margin-top:2rem; }
+    @media print {
+      .hdr, #frm, #ld, .btn-row, .disclaimer { display:none !important; }
+      body { padding:1rem; background:#fff; color:#1a1a1a; }
+      .wrap { max-width:100%; }
+      .rb h2 { color:#9E0C16; }
+      .rn { color:#133358; }
+      .result-footer { display:block !important; }
+    }
+    .err { background:#fff0f0; color:#c0392b; border:.5px solid rgba(192,57,43,.3); border-radius:var(--r-md); padding:10px 14px; font-size:12px; margin-top:.6rem; }
+    @media(prefers-color-scheme:dark){ .err{background:#2a1010;color:#e07070;border-color:rgba(224,112,112,.3);} }
+    @media(max-width:480px){ .g2{grid-template-columns:1fr} .tg{grid-template-columns:repeat(3,1fr)} .opts{grid-template-columns:1fr} .opts3{grid-template-columns:1fr 1fr} }
+  </style>
+</head>
+<body>
+<div class="wrap">
+  <header class="hdr">
+    <h1>GEDANKEN&#8209;DESIGN <em>Kompass</em></h1>
+    <div class="div"></div>
+    <p class="sub">Persönlichkeitsanalyse &amp; Coaching</p>
+    <p class="brand">Erich Steinwendner · IMPULSGEBER</p>
+  </header>
 
-  if (req.method === 'OPTIONS') return res.status(200).end();
-  if (req.method !== 'POST') return res.status(405).json({ error: 'Method not allowed' });
+  <div class="disclaimer">
+    Dieser Kompass ist keine wissenschaftliche Analyse. Er basiert auf den Büchern
+    <em>GEDANKEN-DESIGN</em> und <em>Trotzdem.</em> von Erich Steinwendner
+    und dient der persönlichen Reflexion und Orientierung.
+    Mehr unter <a href="https://www.steinwendner.info" target="_blank" rel="noopener">steinwendner.info</a>
+  </div>
 
-  const { prompt } = req.body;
-  if (!prompt) return res.status(400).json({ error: 'Kein Prompt' });
+  <div style="font-size:12px;color:var(--text2);text-align:center;margin-bottom:1.8rem;line-height:1.9;">
+    Beantworte jede Frage so,<br>
+    wie sie sich für dich im Moment am stimmigsten anfühlt.<br>
+    <br>
+    Es gibt keine richtigen oder falschen Antworten,<br>
+    wähle das, was dir am nächsten ist.
+  </div>
+
+  <div id="frm">
+    <div class="sec">
+      <p class="sec-t">Persönliche Angaben</p>
+      <div class="g2">
+        <div class="fld"><label>Vorname</label><input type="text" id="fn" placeholder="Dein Vorname"/></div>
+        <div class="fld">
+          <label>Geburtsdatum</label>
+          <div style="display:grid;grid-template-columns:2fr 2fr 3fr;gap:6px;">
+            <input type="number" id="bd-tag" placeholder="TT" min="1" max="31" style="text-align:center;"/>
+            <input type="number" id="bd-mon" placeholder="MM" min="1" max="12" style="text-align:center;"/>
+            <input type="number" id="bd-jahr" placeholder="JJJJ" min="1900" max="2025" style="text-align:center;"/>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <p class="sec-t">Dein GEDANKEN-DESIGN Typ</p>
+      <div class="tg">
+        <button class="tb" data-t="Der Gestalter" onclick="sT(this)"><i class="ti ti-tools" aria-hidden="true"></i><span class="tn">Der Gestalter</span></button>
+        <button class="tb" data-t="Der Impulsgeber" onclick="sT(this)"><i class="ti ti-sparkles" aria-hidden="true"></i><span class="tn">Der Impulsgeber</span></button>
+        <button class="tb" data-t="Der Wegbegleiter" onclick="sT(this)"><i class="ti ti-map-2" aria-hidden="true"></i><span class="tn">Der Wegbegleiter</span></button>
+        <button class="tb" data-t="Der Spiegel" onclick="sT(this)"><i class="ti ti-ripple" aria-hidden="true"></i><span class="tn">Der Spiegel</span></button>
+        <button class="tb" data-t="Der Wandler" onclick="sT(this)"><i class="ti ti-butterfly" aria-hidden="true"></i><span class="tn">Der Wandler</span></button>
+      </div>
+      <button class="tb tunk" data-t="unbekannt" onclick="sT(this)">
+        <i class="ti ti-compass" style="font-size:14px" aria-hidden="true"></i>
+        <span class="tn">Ich weiß es nicht — bitte ableiten</span>
+      </button>
+    </div>
+
+    <div class="sec">
+      <p class="sec-t">Energie &amp; Antrieb</p>
+      <div class="qs">
+        <div class="qi">
+          <span class="qn">01 <span class="qtag">Energie-Filter</span></span>
+          <p class="qt">Wie erlebst du deine Energie im Alltag?</p>
+          <div class="opts">
+            <button class="opt" data-q="e1" data-v="Konstant & ausdauernd" onclick="sO(this)">Konstant &amp; ausdauernd</button>
+            <button class="opt" data-q="e1" data-v="In Wellen, unregelmäßig" onclick="sO(this)">In Wellen, unregelmäßig</button>
+            <button class="opt" data-q="e1" data-v="Schübeweise, dann leer" onclick="sO(this)">Schübeweise, dann leer</button>
+            <button class="opt" data-q="e1" data-v="Stark abhängig von anderen" onclick="sO(this)">Stark abhängig von anderen</button>
+          </div>
+        </div>
+        <div class="qi">
+          <span class="qn">02 <span class="qtag">Entscheidungs-Strategie</span></span>
+          <p class="qt">Wie triffst du deine besten Entscheidungen?</p>
+          <div class="opts">
+            <button class="opt" data-q="e2" data-v="Aus dem Bauch — sofort" onclick="sO(this)">Aus dem Bauch — sofort, direkt</button>
+            <button class="opt" data-q="e2" data-v="Abwarten und beobachten" onclick="sO(this)">Ich warte &amp; beobachte erst</button>
+            <button class="opt" data-q="e2" data-v="Wenn ich gefragt werde" onclick="sO(this)">Wenn ich gefragt werde</button>
+            <button class="opt" data-q="e2" data-v="Innere Stille und Reflexion" onclick="sO(this)">Innere Stille &amp; Reflexion</button>
+          </div>
+        </div>
+        <div class="qi">
+          <span class="qn">03 <span class="qtag">Schatten-Signal</span></span>
+          <p class="qt">Was entsteht in dir, wenn du gegen deine Natur handelst?</p>
+          <div class="opts opts3">
+            <button class="opt" data-q="e3" data-v="Frustration und Erschöpfung" onclick="sO(this)">Frustration &amp; Erschöpfung</button>
+            <button class="opt" data-q="e3" data-v="Wut und innerer Widerstand" onclick="sO(this)">Wut &amp; innerer Widerstand</button>
+            <button class="opt" data-q="e3" data-v="Enttäuschung und Bitterkeit" onclick="sO(this)">Enttäuschung &amp; Bitterkeit</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <p class="sec-t">Gedanken-Muster &amp; Haltung</p>
+      <div class="qs">
+        <div class="qi">
+          <span class="qn">04 <span class="qtag">Glaubenssatz-Ebene</span></span>
+          <p class="qt">Welcher Satz klingt in dir am stärksten nach?</p>
+          <div class="opts">
+            <button class="opt" data-q="e4" data-v="Ich muss alles selbst im Griff haben" onclick="sO(this)">„Ich muss alles selbst im Griff haben."</button>
+            <button class="opt" data-q="e4" data-v="Ich muss erst leisten um wertvoll zu sein" onclick="sO(this)">„Ich muss erst leisten, um wertvoll zu sein."</button>
+            <button class="opt" data-q="e4" data-v="Ich weiß nicht ob ich gut genug bin" onclick="sO(this)">„Ich weiß nicht, ob ich gut genug bin."</button>
+            <button class="opt" data-q="e4" data-v="Ich trage zu viel Verantwortung allein" onclick="sO(this)">„Ich trage zu viel Verantwortung allein."</button>
+          </div>
+        </div>
+        <div class="qi">
+          <span class="qn">04b <span class="qtag">Glaubenssatz-Situation</span></span>
+          <p class="qt">In welcher Situation zeigt sich dieser Satz am stärksten?</p>
+          <div class="opts">
+            <button class="opt" data-q="e4b" data-v="Im Beruf und bei Leistung" onclick="sO(this)">Im Beruf &amp; bei Leistung</button>
+            <button class="opt" data-q="e4b" data-v="In Beziehungen und mit anderen" onclick="sO(this)">In Beziehungen &amp; mit anderen</button>
+            <button class="opt" data-q="e4b" data-v="Wenn ich allein bin" onclick="sO(this)">Wenn ich allein bin</button>
+            <button class="opt" data-q="e4b" data-v="In Krisen und unter Druck" onclick="sO(this)">In Krisen &amp; unter Druck</button>
+          </div>
+        </div>
+        <div class="qi">
+          <span class="qn">05 <span class="qtag">IMAGO-Potenzial</span></span>
+          <p class="qt">Was schlummert in dir — ein Wunsch, eine Idee, ein Weg?</p>
+          <textarea id="im" placeholder="Was wartet in dir darauf, sichtbar zu werden?"></textarea>
+        <div class="qi">
+          <span class="qn">05b <span class="qtag">IMAGO-Hindernis</span></span>
+          <p class="qt">Was hält dich davon ab, es zu leben?</p>
+          <div class="opts">
+            <button class="opt" data-q="e5b" data-v="Ich weiß nicht wie ich anfangen soll" onclick="sO(this)">Ich weiß nicht wie ich anfangen soll</button>
+            <button class="opt" data-q="e5b" data-v="Ich habe Angst zu scheitern" onclick="sO(this)">Ich habe Angst zu scheitern</button>
+            <button class="opt" data-q="e5b" data-v="Ich glaube nicht dass ich es verdiene" onclick="sO(this)">Ich glaube nicht, dass ich es verdiene</button>
+            <button class="opt" data-q="e5b" data-v="Die äußeren Umstände lassen es nicht zu" onclick="sO(this)">Die äußeren Umstände lassen es nicht zu</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <p class="sec-t">Beziehungen &amp; Wirkung</p>
+      <div class="qs">
+        <div class="qi">
+          <span class="qn">06 <span class="qtag">Soziale Strategie</span></span>
+          <p class="qt">Wie gehst du in Gruppen auf andere zu?</p>
+          <div class="opts">
+            <button class="opt" data-q="e5" data-v="Ich gehe aktiv auf andere zu" onclick="sO(this)">Ich gehe aktiv auf andere zu</button>
+            <button class="opt" data-q="e5" data-v="Ich reagiere wenn man mich anspricht" onclick="sO(this)">Ich reagiere, wenn man mich anspricht</button>
+            <button class="opt" data-q="e5" data-v="Ich warte auf eine echte Einladung" onclick="sO(this)">Ich warte auf eine echte Einladung</button>
+            <button class="opt" data-q="e5" data-v="Ich spiegele was andere einbringen" onclick="sO(this)">Ich spiegele, was andere einbringen</button>
+          </div>
+        </div>
+        <div class="qi">
+          <span class="qn">07 <span class="qtag">Trotzdem-Frage</span></span>
+          <p class="qt">Wo machst du weiter — obwohl es kostet?</p>
+          <textarea id="tz" placeholder="Ruhig unfertig, ruhig ehrlich."></textarea>
+        </div>
+        <div class="qi">
+          <span class="qn">07b <span class="qtag">Trotzdem-Kraft</span></span>
+          <p class="qt">Was gibt dir die Kraft, trotzdem weiterzumachen?</p>
+          <div class="opts">
+            <button class="opt" data-q="e7b" data-v="Meine innere Überzeugung" onclick="sO(this)">Meine innere Überzeugung</button>
+            <button class="opt" data-q="e7b" data-v="Menschen die mir wichtig sind" onclick="sO(this)">Menschen die mir wichtig sind</button>
+            <button class="opt" data-q="e7b" data-v="Die Vorstellung wie es sein könnte" onclick="sO(this)">Die Vorstellung wie es sein könnte</button>
+            <button class="opt" data-q="e7b" data-v="Ich weiß es ehrlich gesagt nicht" onclick="sO(this)">Ich weiß es ehrlich gesagt nicht</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <p class="sec-t">IKIGAI &amp; Fokus</p>
+      <div class="qs">
+        <div class="qi">
+          <span class="qn">08 <span class="qtag">IKIGAI-Schnittmenge</span></span>
+          <p class="qt">Wo berühren sich Können, Leidenschaft, Wirkung und Lebensunterhalt?</p>
+          <div class="opts">
+            <button class="opt" data-q="e6" data-v="Ich spüre es lebe es aber noch nicht voll" onclick="sO(this)">Ich spüre es — lebe es aber noch nicht voll</button>
+            <button class="opt" data-q="e6" data-v="Es ist noch unklar ich suche noch" onclick="sO(this)">Es ist noch unklar — ich suche noch</button>
+            <button class="opt" data-q="e6" data-v="Ich lebe es aber es fühlt sich unvollständig an" onclick="sO(this)">Ich lebe es — aber es fühlt sich unvollständig an</button>
+            <button class="opt" data-q="e6" data-v="Etwas Wesentliches fehlt" onclick="sO(this)">Etwas Wesentliches fehlt — ich weiß noch nicht was</button>
+          </div>
+        </div>
+        <div class="qi">
+          <span class="qn">09 <span class="qtag">Goldene Fugen</span></span>
+          <p class="qt">Wo in deinem Leben hat dich etwas Zerbrochenes stärker gemacht — eine Niederlage, ein Verlust, eine Krise, die dich im Nachhinein geformt hat?</p>
+          <textarea id="kintsugi" placeholder="Ruhig unfertig. Das Gold steckt in der Antwort."></textarea>
+        </div>
+        <div class="qi">
+          <span class="qn">09b <span class="qtag">KINTSUGI-Erkenntnis</span></span>
+          <p class="qt">Was hast du durch diesen Bruch über dich gelernt?</p>
+          <div class="opts">
+            <button class="opt" data-q="e9b" data-v="Dass ich stärker bin als ich dachte" onclick="sO(this)">Dass ich stärker bin als ich dachte</button>
+            <button class="opt" data-q="e9b" data-v="Dass ich loslassen kann" onclick="sO(this)">Dass ich loslassen kann</button>
+            <button class="opt" data-q="e9b" data-v="Dass ich mir selbst vertrauen kann" onclick="sO(this)">Dass ich mir selbst vertrauen kann</button>
+            <button class="opt" data-q="e9b" data-v="Dass Schmerz auch Wachstum ist" onclick="sO(this)">Dass Schmerz auch Wachstum ist</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="sec">
+      <p class="sec-t">Deine Intention</p>
+      <div class="qs">
+        <div class="qi">
+          <span class="qn">10 <span class="qtag">Abschluss</span></span>
+          <p class="qt">Was soll sich nach dieser Analyse klarer anfühlen?</p>
+          <textarea id="int" placeholder="Was soll nach dieser Begegnung mit dir selbst anders sein?"></textarea>
+        </div>
+      </div>
+    </div>
+
+    <div class="sub-a">
+      <button class="sub-btn" id="sbtn" onclick="go()">Kompass erstellen ↗</button>
+      <div class="prog" id="pb"></div>
+    </div>
+    <div id="er"></div>
+  </div>
+
+  <div id="ld" style="display:none">
+    <div class="load">
+      <div class="ldots"><span></span><span></span><span></span></div>
+      <p class="lt" id="ld-text">Dein Energieprofil wird gelesen</p>
+      <p class="ls">GEDANKEN-DESIGN · IKIGAI · KINTSUGI</p>
+    </div>
+  </div>
+
+  <div id="res" style="display:none"></div>
+</div>
+
+<script>
+var sType='', ans={};
+
+function sT(b){ document.querySelectorAll('.tb').forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); sType=b.dataset.t; upP(); }
+function sO(b){ var q=b.dataset.q; document.querySelectorAll('[data-q="'+q+'"]').forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); ans[q]=b.dataset.v; upP(); }
+function upP(){ var t=9,f=Object.keys(ans).length+(sType?1:0),pb=document.getElementById('pb'); pb.innerHTML=''; for(var i=0;i<t;i++){var d=document.createElement('div');d.className='pd'+(i<f?' on':'');pb.appendChild(d);} }
+
+async function go(){
+  var fname=document.getElementById('fn').value.trim();
+  var bdTag=document.getElementById('bd-tag').value.trim();
+  var bdMon=document.getElementById('bd-mon').value.trim();
+  var bdJahr=document.getElementById('bd-jahr').value.trim();
+  var bdate='';
+  if(bdTag&&bdMon&&bdJahr&&bdJahr.length===4){
+    bdate=bdJahr+'-'+bdMon.padStart(2,'0')+'-'+bdTag.padStart(2,'0');
+  }
+  var imago=document.getElementById('im').value.trim();
+  var trotzdem=document.getElementById('tz').value.trim();
+  var intent=document.getElementById('int').value.trim();
+  var kintsugi=document.getElementById('kintsugi').value.trim();
+  var er=document.getElementById('er');
+  er.innerHTML='';
+
+  if(!fname){ er.innerHTML='<div class="err">Bitte gib deinen Vornamen ein.</div>'; return; }
+  if(['e1','e2','e3','e4','e5','e6'].some(q=>!ans[q])){ er.innerHTML='<div class="err">Bitte beantworte alle Auswahl-Fragen.</div>'; return; }
+
+  var typeT=sType&&sType!=='unbekannt'?sType:'unbekannt (bitte aus den Antworten ableiten)';
+
+  var alter='';
+  if(bdate){
+    var geb=new Date(bdate), heute=new Date();
+    alter=heute.getFullYear()-geb.getFullYear()-(heute<new Date(heute.getFullYear(),geb.getMonth(),geb.getDate())?1:0);
+  }
+
+  var gebInfo=bdate?(', geb. '+bdate+(alter?', aktuell '+alter+' Jahre alt)':')')):')';
+  if(!bdate) gebInfo='';
+
+  var prompt='GEDANKEN-DESIGN Kompass für '+fname+(bdate?gebInfo:'')+'\n\nGEDANKEN-DESIGN Typ: '+typeT+'\nEnergie: '+ans.e1+'\nEntscheidung: '+ans.e2+'\nSchatten: '+ans.e3+'\nGlaubenssatz: '+ans.e4+(ans.e4b?'\nGlaubenssatz-Situation: '+ans.e4b:'')+'\nSozialer Kontakt: '+ans.e5+(ans.e5b?'\nIMAGO-Hindernis (was hält dich ab): '+ans.e5b:'')+'\nIKIGAI-Status: '+ans.e6+(imago?'\nIMAGO-Potenzial: '+imago:'')+(trotzdem?'\nTrotzdem-Bereich: '+trotzdem:'')+(ans.e7b?'\nTrotzdem-Kraft: '+ans.e7b:'')+(kintsugi?'\nKINTSUGI — Goldene Fugen: '+kintsugi:'')+(ans.e9b?'\nKINTSUGI-Erkenntnis: '+ans.e9b:'')+(intent?'\nIntention: '+intent:'')+'\n\nErstelle GEDANKEN-DESIGN Kompass Analyse. Typen: Gestalter=baut+konstant, Impulsgeber=Schübe+zündet, Wegbegleiter=Stille+führt, Spiegel=reflektiert, Wandler=Zyklen. Erkenne das MUSTER hinter den Antworten. Je Abschnitt 2-3 Sätze:\n## Dein Energieprofil\n## Dein Entscheidungskompass\n## Deine IMAGO-Zellen\n## Dein Glaubenssatz-Muster\n## Dein IKIGAI\n## Deine goldenen Fugen\n## Trotzdem — dein Fundament\n## Fünf Impulse für dich\n## Ein Satz für dich\n\nWarm, direkt (du/dein), roter Faden spürbar.';
+
+  document.getElementById('frm').style.display='none';
+  document.getElementById('ld').style.display='block';
+  document.getElementById('sbtn').disabled=true;
+
+  var ldTexte=[
+    'Dein Energieprofil wird gelesen',
+    'Deine Glaubenssätze werden betrachtet',
+    'Deine IMAGO-Zellen erwachen',
+    'Deine goldenen Fugen werden gespürt',
+    'Dein Trotzdem-Fundament wird erkannt',
+    'Dein persönlicher Kompass entsteht'
+  ];
+  var ldIdx=0;
+  var ldTimer=setInterval(function(){
+    ldIdx=(ldIdx+1)%ldTexte.length;
+    var el=document.getElementById('ld-text');
+    if(el) el.textContent=ldTexte[ldIdx];
+  },2000);
 
   try {
-    const response = await fetch('https://api.anthropic.com/v1/messages', {
-      method: 'POST',
-      headers: {
-        'Content-Type': 'application/json',
-        'x-api-key': process.env.ANTHROPIC_API_KEY,
-        'anthropic-version': '2023-06-01',
-      },
-      body: JSON.stringify({
-        model: 'claude-haiku-4-5',
-        max_tokens: 1200,
-        messages: [{ role: 'user', content: prompt }],
-      }),
-    });
-
-    const data = await response.json();
-    const text = data?.content?.[0]?.text || '';
-    if (!text) throw new Error('Leere Antwort');
-
-    res.status(200).json({ result: text });
-  } catch (err) {
-    res.status(500).json({ error: 'Fehler bei der Analyse.' });
+    var r=await fetch('/api/analyse',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
+    var d=await r.json();
+    if(!d.result) throw new Error('leer');
+    clearInterval(ldTimer);
+    document.getElementById('ld').style.display='none';
+    showR(fname, typeT, d.result);
+  } catch(e){
+    clearInterval(ldTimer);
+    document.getElementById('ld').style.display='none';
+    document.getElementById('frm').style.display='block';
+    document.getElementById('sbtn').disabled=false;
+    er.innerHTML='<div class="err">Der Kompass wird gerade gewartet oder es ist ein technischer Fehler aufgetreten. Bitte versuche es in einigen Minuten erneut — oder schreib mir direkt: <a href="mailto:erich@steinwendner.net" style="color:inherit;text-decoration:underline;">erich@steinwendner.net</a></div>';
   }
 }
+
+function fmtMd(t){
+  return t
+    .replace(/^## (.+)$/gm,'<h2>$1</h2>')
+    .replace(/\*\*(.+?)\*\*/g,'<strong>$1</strong>')
+    .replace(/\*([^*\n]+?)\*/g,'<em>$1</em>')
+    .replace(/^> (.+)$/gm,'<blockquote>$1</blockquote>')
+    .replace(/^\- (.+)$/gm,'<li>$1</li>')
+    .replace(/(<li>[\s\S]*?<\/li>\n?)+/g,m=>'<ul>'+m+'</ul>')
+    .replace(/\n{2,}/g,'</p><p>')
+    .replace(/^([^<].+)$/gm,m=>m.startsWith('<')?m:'<p>'+m+'</p>');
+}
+
+function showR(fname, typ, text){
+  var tl=typ!=='unbekannt (bitte aus den Antworten ableiten)'?typ:'';
+  var h='<div class="rh"><p class="rn">'+fname+'</p><p class="rt">'+(tl?tl+' · ':'')+'GEDANKEN-DESIGN Kompass</p><div class="div"></div></div>';
+  h+='<div class="rb" id="stream-content">'+fmtMd(text)+'</div>';
+  h+='<div class="result-footer">Basierend auf <em>GEDANKEN-DESIGN</em> und <em>Trotzdem.</em> von Erich Steinwendner &nbsp;·&nbsp; <a href="https://www.steinwendner.info" target="_blank" rel="noopener">steinwendner.info</a></div>';
+  h+='<div style="text-align:center;margin-top:1.8rem;padding:1.4rem 1.2rem;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--r-lg);"><p style="font-family:Cormorant Garamond,serif;font-size:17px;font-weight:300;letter-spacing:.03em;color:var(--text);margin-bottom:.6rem;">Wenn dich diese Analyse berührt hat und du tiefer gehen möchtest —</p><p style="font-size:13px;color:var(--text2);margin-bottom:1rem;">Ich begleite dich gerne persönlich.</p><a href="https://www.steinwendner.info" target="_blank" rel="noopener" style="display:inline-block;font-family:Cormorant Garamond,serif;font-size:14px;letter-spacing:.12em;text-transform:uppercase;padding:10px 28px;border:.5px solid var(--border3);border-radius:var(--r-md);color:var(--text);text-decoration:none;">Jetzt Kontakt aufnehmen</a></div>';
+  h+='<div class="btn-row">';
+  h+='<button class="pdf-btn" onclick="savePdf()">Als PDF speichern ↓</button>';
+  h+='<button class="neu-btn" onclick="rst()">Neue Analyse starten</button>';
+  h+='</div>';
+  var res=document.getElementById('res');
+  res.innerHTML=h; res.style.display='block';
+}
+
+function savePdf(){
+  window.print();
+}
+
+function rst(){
+  sType=''; ans={};
+  ['fn','bd-tag','bd-mon','bd-jahr','im','tz','int','kintsugi'].forEach(id=>{var e=document.getElementById(id);if(e)e.value='';});
+  document.querySelectorAll('.tb,.opt').forEach(b=>b.classList.remove('sel'));
+  document.getElementById('pb').innerHTML='';
+  document.getElementById('er').innerHTML='';
+  document.getElementById('res').style.display='none';
+  document.getElementById('res').innerHTML='';
+  document.getElementById('frm').style.display='block';
+  document.getElementById('sbtn').disabled=false;
+}
+
+upP();
+</script>
+</body>
+</html>
