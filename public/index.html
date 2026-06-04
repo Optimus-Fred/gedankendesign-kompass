@@ -1,3 +1,4 @@
+
 <!DOCTYPE html>
 <html lang="de">
 <head>
@@ -337,7 +338,7 @@ function sT(b){ document.querySelectorAll('.tb').forEach(x=>x.classList.remove('
 function sO(b){ var q=b.dataset.q; document.querySelectorAll('[data-q="'+q+'"]').forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); ans[q]=b.dataset.v; upP(); }
 function upP(){ var t=9,f=Object.keys(ans).length+(sType?1:0),pb=document.getElementById('pb'); pb.innerHTML=''; for(var i=0;i<t;i++){var d=document.createElement('div');d.className='pd'+(i<f?' on':'');pb.appendChild(d);} }
 
-async function go(){
+function go(){
   var fname=document.getElementById('fn').value.trim();
   var bdTag=document.getElementById('bd-tag').value.trim();
   var bdMon=document.getElementById('bd-mon').value.trim();
@@ -373,18 +374,29 @@ async function go(){
   document.getElementById('ld').style.display='block';
   document.getElementById('sbtn').disabled=true;
 
-  try {
-    var r=await fetch('/api/analyse',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
-    var d=await r.json();
-    if(!d.result) throw new Error('leer');
+  var xhr=new XMLHttpRequest();
+  xhr.open('POST','/api/analyse',true);
+  xhr.setRequestHeader('Content-Type','application/json');
+  xhr.timeout=60000;
+  xhr.onload=function(){
     document.getElementById('ld').style.display='none';
-    showR(fname, typeT, d.result);
-  } catch(e){
+    if(xhr.status===200){
+      try{
+        var d=JSON.parse(xhr.responseText);
+        if(d.result){ showR(fname,typeT,d.result); return; }
+      }catch(e){}
+    }
+    document.getElementById('frm').style.display='block';
+    document.getElementById('sbtn').disabled=false;
+    er.innerHTML='<div class="err">Der Kompass wird gerade gewartet. Bitte versuche es erneut oder schreib mir: <a href="mailto:erich@steinwendner.net" style="color:inherit;text-decoration:underline;">erich@steinwendner.net</a></div>';
+  };
+  xhr.onerror=xhr.ontimeout=function(){
     document.getElementById('ld').style.display='none';
     document.getElementById('frm').style.display='block';
     document.getElementById('sbtn').disabled=false;
-    er.innerHTML='<div class="err">Der Kompass wird gerade gewartet oder es ist ein technischer Fehler aufgetreten. Bitte versuche es in einigen Minuten erneut — oder schreib mir direkt: <a href="mailto:erich@steinwendner.net" style="color:inherit;text-decoration:underline;">erich@steinwendner.net</a></div>';
-  }
+    er.innerHTML='<div class="err">Der Kompass wird gerade gewartet. Bitte versuche es erneut oder schreib mir: <a href="mailto:erich@steinwendner.net" style="color:inherit;text-decoration:underline;">erich@steinwendner.net</a></div>';
+  };
+  xhr.send(JSON.stringify({prompt:prompt}));
 }
 
 function fmtMd(t){
