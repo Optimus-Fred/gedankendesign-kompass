@@ -125,14 +125,6 @@
     Mehr unter <a href="https://www.steinwendner.info" target="_blank" rel="noopener">steinwendner.info</a>
   </div>
 
-  <div style="font-size:12px;color:var(--text2);text-align:center;margin-bottom:1.8rem;line-height:1.9;">
-    Beantworte jede Frage so,<br>
-    wie sie sich für dich im Moment am stimmigsten anfühlt.<br>
-    <br>
-    Es gibt keine richtigen oder falschen Antworten,<br>
-    wähle das, was dir am nächsten ist.
-  </div>
-
   <div id="frm">
     <div class="sec">
       <p class="sec-t">Persönliche Angaben</p>
@@ -213,28 +205,9 @@
           </div>
         </div>
         <div class="qi">
-          <span class="qn">04b <span class="qtag">Glaubenssatz-Situation</span></span>
-          <p class="qt">In welcher Situation zeigt sich dieser Satz am stärksten?</p>
-          <div class="opts">
-            <button class="opt" data-q="e4b" data-v="Im Beruf und bei Leistung" onclick="sO(this)">Im Beruf &amp; bei Leistung</button>
-            <button class="opt" data-q="e4b" data-v="In Beziehungen und mit anderen" onclick="sO(this)">In Beziehungen &amp; mit anderen</button>
-            <button class="opt" data-q="e4b" data-v="Wenn ich allein bin" onclick="sO(this)">Wenn ich allein bin</button>
-            <button class="opt" data-q="e4b" data-v="In Krisen und unter Druck" onclick="sO(this)">In Krisen &amp; unter Druck</button>
-          </div>
-        </div>
-        <div class="qi">
           <span class="qn">05 <span class="qtag">IMAGO-Potenzial</span></span>
           <p class="qt">Was schlummert in dir — ein Wunsch, eine Idee, ein Weg?</p>
           <textarea id="im" placeholder="Was wartet in dir darauf, sichtbar zu werden?"></textarea>
-        <div class="qi">
-          <span class="qn">05b <span class="qtag">IMAGO-Hindernis</span></span>
-          <p class="qt">Was hält dich davon ab, es zu leben?</p>
-          <div class="opts">
-            <button class="opt" data-q="e5b" data-v="Ich weiß nicht wie ich anfangen soll" onclick="sO(this)">Ich weiß nicht wie ich anfangen soll</button>
-            <button class="opt" data-q="e5b" data-v="Ich habe Angst zu scheitern" onclick="sO(this)">Ich habe Angst zu scheitern</button>
-            <button class="opt" data-q="e5b" data-v="Ich glaube nicht dass ich es verdiene" onclick="sO(this)">Ich glaube nicht, dass ich es verdiene</button>
-            <button class="opt" data-q="e5b" data-v="Die äußeren Umstände lassen es nicht zu" onclick="sO(this)">Die äußeren Umstände lassen es nicht zu</button>
-          </div>
         </div>
       </div>
     </div>
@@ -257,16 +230,6 @@
           <p class="qt">Wo machst du weiter — obwohl es kostet?</p>
           <textarea id="tz" placeholder="Ruhig unfertig, ruhig ehrlich."></textarea>
         </div>
-        <div class="qi">
-          <span class="qn">07b <span class="qtag">Trotzdem-Kraft</span></span>
-          <p class="qt">Was gibt dir die Kraft, trotzdem weiterzumachen?</p>
-          <div class="opts">
-            <button class="opt" data-q="e7b" data-v="Meine innere Überzeugung" onclick="sO(this)">Meine innere Überzeugung</button>
-            <button class="opt" data-q="e7b" data-v="Menschen die mir wichtig sind" onclick="sO(this)">Menschen die mir wichtig sind</button>
-            <button class="opt" data-q="e7b" data-v="Die Vorstellung wie es sein könnte" onclick="sO(this)">Die Vorstellung wie es sein könnte</button>
-            <button class="opt" data-q="e7b" data-v="Ich weiß es ehrlich gesagt nicht" onclick="sO(this)">Ich weiß es ehrlich gesagt nicht</button>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -288,16 +251,6 @@
           <p class="qt">Wo in deinem Leben hat dich etwas Zerbrochenes stärker gemacht — eine Niederlage, ein Verlust, eine Krise, die dich im Nachhinein geformt hat?</p>
           <textarea id="kintsugi" placeholder="Ruhig unfertig. Das Gold steckt in der Antwort."></textarea>
         </div>
-        <div class="qi">
-          <span class="qn">09b <span class="qtag">KINTSUGI-Erkenntnis</span></span>
-          <p class="qt">Was hast du durch diesen Bruch über dich gelernt?</p>
-          <div class="opts">
-            <button class="opt" data-q="e9b" data-v="Dass ich stärker bin als ich dachte" onclick="sO(this)">Dass ich stärker bin als ich dachte</button>
-            <button class="opt" data-q="e9b" data-v="Dass ich loslassen kann" onclick="sO(this)">Dass ich loslassen kann</button>
-            <button class="opt" data-q="e9b" data-v="Dass ich mir selbst vertrauen kann" onclick="sO(this)">Dass ich mir selbst vertrauen kann</button>
-            <button class="opt" data-q="e9b" data-v="Dass Schmerz auch Wachstum ist" onclick="sO(this)">Dass Schmerz auch Wachstum ist</button>
-          </div>
-        </div>
       </div>
     </div>
 
@@ -313,7 +266,7 @@
     </div>
 
     <div class="sub-a">
-      <button type="button" class="sub-btn" id="sbtn" onclick="go()">Kompass erstellen ↗</button>
+      <button class="sub-btn" id="sbtn" onclick="go()">Kompass erstellen ↗</button>
       <div class="prog" id="pb"></div>
     </div>
     <div id="er"></div>
@@ -322,7 +275,7 @@
   <div id="ld" style="display:none">
     <div class="load">
       <div class="ldots"><span></span><span></span><span></span></div>
-      <p class="lt" id="ld-text">Dein Energieprofil wird gelesen</p>
+      <p class="lt">Dein Kompass entsteht</p>
       <p class="ls">GEDANKEN-DESIGN · IKIGAI · KINTSUGI</p>
     </div>
   </div>
@@ -337,7 +290,6 @@ function sT(b){ document.querySelectorAll('.tb').forEach(x=>x.classList.remove('
 function sO(b){ var q=b.dataset.q; document.querySelectorAll('[data-q="'+q+'"]').forEach(x=>x.classList.remove('sel')); b.classList.add('sel'); ans[q]=b.dataset.v; upP(); }
 function upP(){ var t=9,f=Object.keys(ans).length+(sType?1:0),pb=document.getElementById('pb'); pb.innerHTML=''; for(var i=0;i<t;i++){var d=document.createElement('div');d.className='pd'+(i<f?' on':'');pb.appendChild(d);} }
 
-var ldTimer=null;
 async function go(){
   var fname=document.getElementById('fn').value.trim();
   var bdTag=document.getElementById('bd-tag').value.trim();
@@ -368,40 +320,23 @@ async function go(){
   var gebInfo=bdate?(', geb. '+bdate+(alter?', aktuell '+alter+' Jahre alt)':')')):')';
   if(!bdate) gebInfo='';
 
-  var prompt='GEDANKEN-DESIGN Kompass für '+fname+(bdate?gebInfo:'')+'\n\nGEDANKEN-DESIGN Typ: '+typeT+'\nEnergie: '+ans.e1+'\nEntscheidung: '+ans.e2+'\nSchatten: '+ans.e3+'\nGlaubenssatz: '+ans.e4+(ans.e4b?'\nGlaubenssatz-Situation: '+ans.e4b:'')+'\nSozialer Kontakt: '+ans.e5+(ans.e5b?'\nIMAGO-Hindernis (was hält dich ab): '+ans.e5b:'')+'\nIKIGAI-Status: '+ans.e6+(imago?'\nIMAGO-Potenzial: '+imago:'')+(trotzdem?'\nTrotzdem-Bereich: '+trotzdem:'')+(ans.e7b?'\nTrotzdem-Kraft: '+ans.e7b:'')+(kintsugi?'\nKINTSUGI — Goldene Fugen: '+kintsugi:'')+(ans.e9b?'\nKINTSUGI-Erkenntnis: '+ans.e9b:'')+(intent?'\nIntention: '+intent:'')+'\n\nErstelle GEDANKEN-DESIGN Kompass Analyse. Typen: Gestalter=baut+konstant, Impulsgeber=Schübe+zündet, Wegbegleiter=Stille+führt, Spiegel=reflektiert, Wandler=Zyklen. Erkenne das MUSTER hinter den Antworten. Je Abschnitt 2-3 Sätze:\n## Dein Energieprofil\n## Dein Entscheidungskompass\n## Deine IMAGO-Zellen\n## Dein Glaubenssatz-Muster\n## Dein IKIGAI\n## Deine goldenen Fugen\n## Trotzdem — dein Fundament\n## Fünf Impulse für dich\n## Ein Satz für dich\n\nWarm, direkt (du/dein), roter Faden spürbar.';
+  var prompt='GEDANKEN-DESIGN Kompass für '+fname+(bdate?gebInfo:'')+'\n\nGEDANKEN-DESIGN Typ: '+typeT+'\nEnergie: '+ans.e1+'\nEntscheidung: '+ans.e2+'\nSchatten: '+ans.e3+'\nGlaubenssatz: '+ans.e4+'\nSozialer Kontakt: '+ans.e5+'\nIKIGAI-Status: '+ans.e6+(imago?'\nIMAGO-Potenzial: '+imago:'')+(trotzdem?'\nTrotzdem-Bereich: '+trotzdem:'')+(kintsugi?'\nKINTSUGI — Goldene Fugen: '+kintsugi:'')+(intent?'\nIntention: '+intent:'')+'\n\nDie fünf GEDANKEN-DESIGN Typen:\n• Der Gestalter — denkt, plant, baut. Konstante Energie, initiiert aus sich heraus.\n• Der Impulsgeber — zündet Funken, bewegt andere, braucht Freiraum. Energie in Schüben.\n• Der Wegbegleiter — führt durch Stille, erkennt Potenziale, wartet auf die richtige Einladung.\n• Der Spiegel — nimmt auf, was andere einbringen, reflektiert das Umfeld tief und präzise.\n• Der Wandler — lebt in Zyklen, braucht Zeit zum Verarbeiten, trägt die Stimmung eines Raumes.\n\nKonzepte aus GEDANKEN-DESIGN und Trotzdem.:\n• Gedanken als Filter für das Unterbewusstsein — der Mensch als Gestalter.\n• Glaubenssätze: einschränkende Überzeugungen hinterfragen und durch stärkende ersetzen.\n• IMAGO-Zellen: schlummerndes Potenzial, das auf Aktivierung wartet.\n• IKIGAI: Schnittmenge aus Liebe, Können, Wirkung, Lebensunterhalt.\n• KINTSUGI: Die Kunst, Zerbrochenes mit Gold zu reparieren — Narben als Stärke, nicht als Schwäche. Goldene Fugen als sichtbare Geschichte der Heilung.\n• Trotzdem-Haltung: trotz Erschöpfung weitergehen — aus tiefer Überzeugung.\n• Fundament unter Druck: das was bleibt, wenn man aufhört alles festhalten zu wollen.\n\nBitte erstelle die vollständige GEDANKEN-DESIGN Kompass Analyse mit diesen Abschnitten:\n## Dein Energieprofil\n## Dein Entscheidungskompass\n## Deine IMAGO-Zellen\n## Dein Glaubenssatz-Muster\n## Dein IKIGAI\n## Deine goldenen Fugen\n## Trotzdem — dein Fundament\n## Fünf Impulse für dich\n## Ein Satz für dich\n\nWarm, tief, direkt (du/dein). Gelegentlich *kursiv*. Kein Horoskop — echtes Gespräch. Schreibe vollständige Sätze bis zum Ende jedes Abschnitts.';
 
   document.getElementById('frm').style.display='none';
   document.getElementById('ld').style.display='block';
   document.getElementById('sbtn').disabled=true;
 
-  var ldTexte=[
-    'Dein Energieprofil wird gelesen',
-    'Deine Glaubenssätze werden betrachtet',
-    'Deine IMAGO-Zellen erwachen',
-    'Deine goldenen Fugen werden gespürt',
-    'Dein Trotzdem-Fundament wird erkannt',
-    'Dein persönlicher Kompass entsteht'
-  ];
-  var ldIdx=0;
-  ldTimer=setInterval(function(){
-    ldIdx=(ldIdx+1)%ldTexte.length;
-    var el=document.getElementById('ld-text');
-    if(el) el.textContent=ldTexte[ldIdx];
-  },2000);
-
   try {
     var r=await fetch('/api/analyse',{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify({prompt})});
     var d=await r.json();
     if(!d.result) throw new Error('leer');
-    clearInterval(ldTimer);
     document.getElementById('ld').style.display='none';
     showR(fname, typeT, d.result);
   } catch(e){
-    clearInterval(ldTimer);
     document.getElementById('ld').style.display='none';
     document.getElementById('frm').style.display='block';
     document.getElementById('sbtn').disabled=false;
-    er.innerHTML='<div class="err">Der Kompass wird gerade gewartet oder es ist ein technischer Fehler aufgetreten. Bitte versuche es in einigen Minuten erneut — oder schreib mir direkt: <a href="mailto:erich@steinwendner.net" style="color:inherit;text-decoration:underline;">erich@steinwendner.net</a></div>';
+    er.innerHTML='<div class="err">Fehler bei der Analyse. Bitte versuche es erneut.</div>';
   }
 }
 
@@ -420,9 +355,8 @@ function fmtMd(t){
 function showR(fname, typ, text){
   var tl=typ!=='unbekannt (bitte aus den Antworten ableiten)'?typ:'';
   var h='<div class="rh"><p class="rn">'+fname+'</p><p class="rt">'+(tl?tl+' · ':'')+'GEDANKEN-DESIGN Kompass</p><div class="div"></div></div>';
-  h+='<div class="rb" id="stream-content">'+fmtMd(text)+'</div>';
+  h+='<div class="rb">'+fmtMd(text)+'</div>';
   h+='<div class="result-footer">Basierend auf <em>GEDANKEN-DESIGN</em> und <em>Trotzdem.</em> von Erich Steinwendner &nbsp;·&nbsp; <a href="https://www.steinwendner.info" target="_blank" rel="noopener">steinwendner.info</a></div>';
-  h+='<div style="text-align:center;margin-top:1.8rem;padding:1.4rem 1.2rem;background:var(--bg2);border:.5px solid var(--border);border-radius:var(--r-lg);"><p style="font-family:Cormorant Garamond,serif;font-size:17px;font-weight:300;letter-spacing:.03em;color:var(--text);margin-bottom:.6rem;">Wenn dich diese Analyse berührt hat und du tiefer gehen möchtest —</p><p style="font-size:13px;color:var(--text2);margin-bottom:1rem;">Ich begleite dich gerne persönlich.</p><a href="https://www.steinwendner.info" target="_blank" rel="noopener" style="display:inline-block;font-family:Cormorant Garamond,serif;font-size:14px;letter-spacing:.12em;text-transform:uppercase;padding:10px 28px;border:.5px solid var(--border3);border-radius:var(--r-md);color:var(--text);text-decoration:none;">Jetzt Kontakt aufnehmen</a></div>';
   h+='<div class="btn-row">';
   h+='<button class="pdf-btn" onclick="savePdf()">Als PDF speichern ↓</button>';
   h+='<button class="neu-btn" onclick="rst()">Neue Analyse starten</button>';
